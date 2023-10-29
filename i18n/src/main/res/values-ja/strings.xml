@@ -211,7 +211,6 @@
     <string name="show_chapter_number">章の数</string>
     <string name="sort_by_source">ソースに基づいた順</string>
     <string name="sort_by_number">章番号順</string>
-    <string name="sort_by_alphabet">50音順</string>
     <string name="manga_download">ダウンロード</string>
     <string name="download_unread">未読</string>
     <string name="confirm_delete_chapters">選択した章を削除してもよろしいですか？</string>
