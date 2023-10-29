@@ -2,6 +2,8 @@ package tachiyomi.domain.chapter.service
 
 import tachiyomi.domain.chapter.model.Chapter
 import tachiyomi.domain.manga.model.Manga
+import java.text.Collator
+import java.util.Locale
 
 fun getChapterSort(
     manga: Manga,
@@ -10,6 +12,11 @@ fun getChapterSort(
     Chapter,
     Chapter,
 ) -> Int {
+    val locale = Locale.getDefault()
+    val collator = Collator.getInstance(locale).apply {
+        strength = Collator.PRIMARY
+    }
+
     return when (manga.sorting) {
         Manga.CHAPTER_SORTING_SOURCE -> when (sortDescending) {
             true -> { c1, c2 -> c1.sourceOrder.compareTo(c2.sourceOrder) }
@@ -24,8 +31,8 @@ fun getChapterSort(
             false -> { c1, c2 -> c1.dateUpload.compareTo(c2.dateUpload) }
         }
         Manga.CHAPTER_SORTING_ALPHABET -> when (sortDescending) {
-            true -> { c1, c2 -> c2.name.compareTo(c1.name)}
-            false -> { c1, c2 -> c1.name.compareTo(c2.name)}
+            true -> { c1, c2 -> collator.compare(c2.name, c1.name)}
+            false -> { c1, c2 -> collator.compare(c1.name, c2.name)}
         }
         else -> throw NotImplementedError("Invalid chapter sorting method: ${manga.sorting}")
     }
